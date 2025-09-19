@@ -12,6 +12,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/authClient";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "The name is mandatory" }),
@@ -24,6 +27,7 @@ const formSchema = z.object({
 });
 
 const SignupFormComponent = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,8 +37,33 @@ const SignupFormComponent = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const { error } = await authClient.signUp.email({
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      fetchOptions: {
+        onError: (error) => {
+          if (error.error.code === "") {
+          }
+        },
+      },
+    });
+
+    console.log(error?.message);
+
+    if (error) {
+      if (error.code === "23505") {
+        form.setError("email", { message: "Email already in use" });
+        toast.error("Email already in use");
+        return;
+      }
+
+      toast.error(error.message || "Sign up failed");
+      return;
+    }
+
+    router.push("/authentication/verifyEmail");
   };
 
   return (
