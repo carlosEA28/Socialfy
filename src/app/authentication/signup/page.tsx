@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import SignupFormComponent from "./components/sign-up-form";
 
 const SignupPage = () => {
   return (
@@ -17,24 +18,8 @@ const SignupPage = () => {
 
         <div className="flex items-center justify-center">
           <div className="flex flex-col items-center justify-center p-4 gap-4 w-[440px] h-[400px]">
-            <Input
-              type="text"
-              className=" bg-[#222222] border-none  h-[72px]  text-[#898889] placeholder:text-[#898889] font-medium text-lg"
-              placeholder="Name"
-            />
-            <Input
-              type="email"
-              className=" bg-[#222222] border-none  h-[72px]  text-[#898889] placeholder:text-[#898889] font-medium text-lg"
-              placeholder="Email"
-            />
-            <Input
-              type="password"
-              className="bg-[#222222] border-none h-[72px] text-[#898889] placeholder:text-[#898889] font-medium text-lg"
-              placeholder="8 Digit Pin"
-            />
-            <Button className="w-full h-[72px] cursor-pointer" size={"lg"}>
-              Create Your Account
-            </Button>
+            <SignupFormComponent />
+
             <p className="text-sm text-[#898889]">
               Already have an account ?{" "}
               <Link className="text-[#FAFAFA]" href={"/authentication/signin"}>
