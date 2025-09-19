@@ -53,7 +53,7 @@ const SigninPage = () => {
               </p>
             </div>
             <Button className="w-full h-[72px]" asChild>
-              <Link href={"/authentication/signup"}>Go to social</Link>
+              <Link href={"/authentication/social"}>Go to social</Link>
             </Button>
           </div>
         </div>
